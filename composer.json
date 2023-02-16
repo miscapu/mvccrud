@@ -1,0 +1,8 @@
+{
+  "name": "miscapu/mvccrud",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
