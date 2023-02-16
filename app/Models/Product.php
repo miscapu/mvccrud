@@ -97,6 +97,24 @@ class Product{
         }
     }
 
+    /**
+     * @param null $where
+     * @param null $order
+     * @param null $limit
+     * @param array|null $fields
+     */
+    public function selectProducts( $where = null, $order = null, $limit = null, array $fields = null  ){
+        // Data of query
+        $where  =   strlen( $where ) ? 'WHERE '.$where : "";
+        $order  =   strlen( $order ) ? 'ORDER BY '.$order : "";
+        $limit  =   strlen( $limit ) ? 'LIMIT '.$limit : "";
+        $fields =   strlen( $fields ) ? $fields : "*";
+
+        // Mount to query
+        $query  =   "SELECT ".$fields." FROM ".$this->table." ".$where." ".$order." ".$limit."";
+//        echo $query; #debug ok
+        return $this->executeQuery( $query );
+    }
 
 
 
@@ -107,5 +125,13 @@ class Product{
 // debug
 //$productModel   =   new Product( 'products' );
 //echo "<pre>";
-//print_r( $productModel ); //OK
+//print_r( $productModel->selectProducts() ); //OK
 //echo "</pre>";
+//
+//// other debug
+//$instanceProduct    =   new Product( "products" );
+//$products  =   $instanceProduct->selectProducts()->fetchAll();
+//
+//foreach ( $products as $product ):
+//    echo $product['name']; #ok
+//    endforeach;

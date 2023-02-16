@@ -1,6 +1,6 @@
 
 </div>
-<div class="col">
+<div class="col-2">
 
 </div>
 </div>
