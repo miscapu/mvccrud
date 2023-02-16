@@ -7,6 +7,7 @@
 namespace App\Models;
 use \PDO;
 use \PDOException;
+use \PDOStatement;
 
 class Product{
 
@@ -66,6 +67,9 @@ class Product{
         $this->setConnection();
     }
 
+    /**
+     * Method for connection to Database
+     */
     private function setConnection(){
         try {
             $this->connection   =   new PDO( 'mysql:host='.self::HOST.';dbname='.self::DBNAME, self::USER, self::PASS);
@@ -75,10 +79,33 @@ class Product{
             die( "Error".$exception->getMessage() );
         }
     }
+
+    /**
+     * @param $query
+     * @param array $params
+     * @return false|PDOStatement
+     */
+    public function executeQuery( $query, $params = [] ){
+        try {
+            // store prepare query into $statement variable
+            $statement  =   $this->connection->prepare( $query );
+            // execute query
+            $statement->execute( $params );
+            return $statement;
+        }catch( PDOException $exception ){
+            die( "Error in execution query: ".$exception->getMessage() );
+        }
+    }
+
+
+
+
+
+
 }
 
 // debug
-$productModel   =   new Product( 'products' );
-echo "<pre>";
-print_r( $productModel );
-echo "</pre>";
+//$productModel   =   new Product( 'products' );
+//echo "<pre>";
+//print_r( $productModel ); //OK
+//echo "</pre>";
