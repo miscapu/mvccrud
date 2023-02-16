@@ -56,10 +56,10 @@ class Product{
 
 
     /**
-     * Define table and coonnection instance
-     * @param string $table
+     * Define table and connection instance
+     * @param $table
      */
-    public function __construct( $table = null )
+    public function __construct( string $table )
     {
         // Table property is equal to param
         $this->table    =   $table;
@@ -102,16 +102,16 @@ class Product{
      * @param null $order
      * @param null $limit
      * @param array|null $fields
-     * @return false|PDOStatement
+     * @return PDOStatement
      */
-    public function selectProducts( $where = null, $order = null, $limit = null, array $fields = null  ){
+    public function selectProducts( $where = null, $order = null, $limit = null, array $fields = null  ):PDOStatement{
         // Data of query
         $where  =   strlen( $where ) ? 'WHERE '.$where : "";
         $order  =   strlen( $order ) ? 'ORDER BY '.$order : "";
         $limit  =   strlen( $limit ) ? 'LIMIT '.$limit : "";
-        $fields =   strlen( $fields ) ? $fields : "*";
+        $fields =   $fields ? $fields : "*";
 
-        // Mount to query
+        // Mount query
         $query  =   "SELECT ".$fields." FROM ".$this->table." ".$where." ".$order." ".$limit."";
 //        echo $query; #debug ok
         return $this->executeQuery( $query );
@@ -122,29 +122,23 @@ class Product{
      * @param $values
      * @return string
      */
-    public function addProduct( array $values ):string{
-        // query data
-        $fields =   array_keys( $values ); #id,name,price,description
-        $binds  =   array_pad( [], count( $fields ), '?'  );
+    public function insertProduct($values):string{
+        // Query Data
+        $fields = array_keys($values);
+        $binds  = array_pad([],count($fields),'?');
 
-        // Mount query
-        $query  =   "INSERT INTO ".$this->table." ( ".implode( ',', $fields )." ) VALUES ( ".implode( ',', $binds )." ) ";
+        // Mount Query
+        $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
         //debug
 //        echo $query;
 //        exit();
 
-        // execute query
-        $this->executeQuery( $query, array_values( $values ) );
+        //Execute query with function executeQuery
+        $this->executeQuery($query,array_values($values));
 
         // return last insert ID
         return $this->connection->lastInsertId();
     }
-
-
-
-
-
-
 }
 
 // debug
@@ -164,4 +158,4 @@ class Product{
 
 // debug addProduct method
 //$addProduct     =   new Product( 'products' );
-//$addProduct->addProduct( [ 'a', 'b' ] );
+//$addProduct->insertProduct( [ 'a', 'b' ] );
