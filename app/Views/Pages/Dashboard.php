@@ -36,6 +36,10 @@ include __DIR__.'/../Layouts/header.php';
         </tbody>
     </table>
 
+    <div class="text-center">
+        <a href="<?= BASE_URL.'/add.php'?>" class="btn btn-success">Add Product</a>
+    </div>
+
 <!-- End Table HTML for data -->
 
 <?php

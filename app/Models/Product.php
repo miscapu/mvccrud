@@ -46,13 +46,13 @@ class Product{
      * table: table name manipulate
      * @var string
      */
-    private $table;
+    private string $table;
 
     /**
      * Instance DB PDO
      * @var PDO
      */
-    private $connection;
+    private PDO $connection;
 
 
     /**
@@ -83,9 +83,9 @@ class Product{
     /**
      * @param $query
      * @param array $params
-     * @return false|PDOStatement
+     * @return PDOStatement
      */
-    public function executeQuery( $query, $params = [] ){
+    public function executeQuery( $query, $params = [] ):PDOStatement{
         try {
             // store prepare query into $statement variable
             $statement  =   $this->connection->prepare( $query );
@@ -102,6 +102,7 @@ class Product{
      * @param null $order
      * @param null $limit
      * @param array|null $fields
+     * @return false|PDOStatement
      */
     public function selectProducts( $where = null, $order = null, $limit = null, array $fields = null  ){
         // Data of query
@@ -115,6 +116,30 @@ class Product{
 //        echo $query; #debug ok
         return $this->executeQuery( $query );
     }
+
+
+    /**
+     * @param $values
+     * @return string
+     */
+    public function addProduct( array $values ):string{
+        // query data
+        $fields =   array_keys( $values ); #id,name,price,description
+        $binds  =   array_pad( [], count( $fields ), '?'  );
+
+        // Mount query
+        $query  =   "INSERT INTO ".$this->table." ( ".implode( ',', $fields )." ) VALUES ( ".implode( ',', $binds )." ) ";
+        //debug
+//        echo $query;
+//        exit();
+
+        // execute query
+        $this->executeQuery( $query, array_values( $values ) );
+
+        // return last insert ID
+        return $this->connection->lastInsertId();
+    }
+
 
 
 
@@ -135,3 +160,8 @@ class Product{
 //foreach ( $products as $product ):
 //    echo $product['name']; #ok
 //    endforeach;
+
+
+// debug addProduct method
+//$addProduct     =   new Product( 'products' );
+//$addProduct->addProduct( [ 'a', 'b' ] );
