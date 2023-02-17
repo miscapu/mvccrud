@@ -3,13 +3,13 @@
 
 For the script to work, first, you must create a table in your database.
 
-The next step is run the following command from your terminal:
+1. First, run the following command from your terminal:
 
     composer install
 
-Next, you must Import the file **products.sql** into your database.
+2. Next, you must Import the file **products.sql** into your database.
 
-Finally, you must alter your database access credentials in the **Product.php** file which is in the following path:
+3. Finally, you must alter your database access credentials in the **Product.php** file which is in the following path:
 
     app/Models/Product.php
 
