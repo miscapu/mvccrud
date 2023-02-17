@@ -67,11 +67,22 @@ class ProductController{
                                                  ->fetchObject( self::class );
     }
 
-    public function update(){
+    /**
+     * @return bool
+     */
+    public function update():bool{
         return ( new Product( 'products' ) )->updateProduct( 'id        = '.$this->id, [
                                                                         'name'     =>  $this->name,
                                                                         'price'     =>  $this->price,
                                                                         'description'     =>  $this->description,
         ]  );
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function delete():bool{
+        return ( new Product( 'products' ) )->deleteProduct( 'id = '.$this->id );
     }
 }

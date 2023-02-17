@@ -33,6 +33,7 @@ include __DIR__.'/../Layouts/header.php';
             <td><?= $product->description; ?></td>
             <td>
                 <a href="<?= BASE_URL."/edit.php?id=".$product->id;?>" class="btn btn-success">Edit</a>
+                <a href="<?= BASE_URL."/delete.php?id=".$product->id;?>" class="btn btn-danger">Delete</a>
             </td>
             
         </tr>

@@ -146,7 +146,7 @@ class Product{
      * @param $values
      * @return bool
      */
-    public function updateProduct( $where, $values ):bool {
+    public function updateProduct( string $where, array $values ):bool {
         // Query data
         $fields =   array_keys( $values );
 
@@ -159,6 +159,21 @@ class Product{
         $this->executeQuery( $query, array_values( $values ) );
 
         //return success
+        return true;
+    }
+
+    /**
+     * @param string $where
+     * @return bool
+     */
+    public function deleteProduct( string $where ):bool{
+        // Mount query
+        $query  =   'DELETE FROM '.$this->table.' WHERE '.$where;
+
+        // Execute query
+        $this->executeQuery( $query );
+
+        // return success
         return true;
     }
 
