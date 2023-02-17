@@ -47,7 +47,7 @@ class ProductController{
     /**
      * @return bool
      */
-    public function createProduct(){
+    public function createProduct():bool {
         $product    =   new Product( 'products' );
         $this->id   =   $product->insertProduct( [
                                                 'name'          =>  $this->name,
@@ -55,5 +55,23 @@ class ProductController{
                                                 'description'   =>  $this->description
                                                 ] );
         return true;
+    }
+
+
+    /**
+     * @param $id
+     * @return object
+     */
+    public static function showProduct( $id ):object{
+        return ( new Product( 'products' ) )->selectProducts( 'id = '.$id )
+                                                 ->fetchObject( self::class );
+    }
+
+    public function update(){
+        return ( new Product( 'products' ) )->updateProduct( 'id        = '.$this->id, [
+                                                                        'name'     =>  $this->name,
+                                                                        'price'     =>  $this->price,
+                                                                        'description'     =>  $this->description,
+        ]  );
     }
 }

@@ -5,6 +5,7 @@
  * Author URI: https://miscapu.com
  */
 namespace App\Models;
+use MongoDB\Driver\Query;
 use \PDO;
 use \PDOException;
 use \PDOStatement;
@@ -139,23 +140,27 @@ class Product{
         // return last insert ID
         return $this->connection->lastInsertId();
     }
+
+    /**
+     * @param $where
+     * @param $values
+     * @return bool
+     */
+    public function updateProduct( $where, $values ):bool {
+        // Query data
+        $fields =   array_keys( $values );
+
+        // create query
+        $query  =   'UPDATE '.$this->table.' SET '.implode( ' = ?, ', $fields ).'=? WHERE '.$where;
+        //debug
+//        echo $query;
+//        exit();
+        // Execute query
+        $this->executeQuery( $query, array_values( $values ) );
+
+        //return success
+        return true;
+    }
+
+
 }
-
-// debug
-//$productModel   =   new Product( 'products' );
-//echo "<pre>";
-//print_r( $productModel->selectProducts() ); //OK
-//echo "</pre>";
-//
-//// other debug
-//$instanceProduct    =   new Product( "products" );
-//$products  =   $instanceProduct->selectProducts()->fetchAll();
-//
-//foreach ( $products as $product ):
-//    echo $product['name']; #ok
-//    endforeach;
-
-
-// debug addProduct method
-//$addProduct     =   new Product( 'products' );
-//$addProduct->insertProduct( [ 'a', 'b' ] );

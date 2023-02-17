@@ -1,7 +1,7 @@
 <?php
 require __DIR__.'/vendor/autoload.php';
 // create title variable
-$title  =   "Insert Product";
+define( 'title', 'Add Product' );
 
 use \App\Controllers\ProductController;
 $product    =   new ProductController();
@@ -18,9 +18,9 @@ if ( isset( $_POST[ 'name-frm' ], $_POST[ 'price-frm' ], $_POST[ 'description-fr
 
     $product->createProduct();
 
-    header( "Location: index.php?status=success" );
+    header( "Location:index.php?status=success" );
     exit();
     endif;
 
 
-include __DIR__.'/app/Views/Pages/insert.php';
+include __DIR__.'/app/Views/Pages/form.php';
