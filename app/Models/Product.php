@@ -107,9 +107,9 @@ class Product{
      */
     public function selectProducts( $where = null, $order = null, $limit = null, array $fields = null  ):PDOStatement{
         // Data of query
-        $where  =   strlen( $where ) ? 'WHERE '.$where : "";
-        $order  =   strlen( $order ) ? 'ORDER BY '.$order : "";
-        $limit  =   strlen( $limit ) ? 'LIMIT '.$limit : "";
+        $where  =   strlen( !is_null( $where ) ) ? 'WHERE '.$where : "";
+        $order  =   strlen( !is_null( $order ) ) ? 'ORDER BY '.$order : "";
+        $limit  =   strlen( !is_null( $limit ) ) ? 'LIMIT '.$limit : "";
         $fields =   $fields ? $fields : "*";
 
         // Mount query
